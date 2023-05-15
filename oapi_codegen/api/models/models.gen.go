@@ -122,12 +122,10 @@ type DatabaseClusterList = []struct {
 					// Name Name must match the name of one entry in pod.spec.resourceClaims of the Pod where this field is used. It makes that resource available inside a container.
 					Name string `json:"name"`
 				} `json:"claims,omitempty"`
-
-				// Limits Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-				Limits *map[string]DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties `json:"limits,omitempty"`
+				Limits *map[string]interface{} `json:"limits,omitempty"`
 
 				// Requests Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-				Requests *map[string]DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties `json:"requests,omitempty"`
+				Requests *map[string]interface{} `json:"requests,omitempty"`
 			} `json:"resources,omitempty"`
 			Schedule *[]struct {
 				CompressionLevel *int    `json:"compressionLevel,omitempty"`
@@ -891,28 +889,6 @@ type DatabaseClusterList = []struct {
 	} `json:"status,omitempty"`
 }
 
-// DatabaseClusterListSpecBackupResourcesLimits0 defines model for .
-type DatabaseClusterListSpecBackupResourcesLimits0 = int
-
-// DatabaseClusterListSpecBackupResourcesLimits1 defines model for .
-type DatabaseClusterListSpecBackupResourcesLimits1 = string
-
-// DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties defines model for DatabaseClusterList.Spec.Backup.Resources.Limits.AdditionalProperties.
-type DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties struct {
-	union json.RawMessage
-}
-
-// DatabaseClusterListSpecBackupResourcesRequests0 defines model for .
-type DatabaseClusterListSpecBackupResourcesRequests0 = int
-
-// DatabaseClusterListSpecBackupResourcesRequests1 defines model for .
-type DatabaseClusterListSpecBackupResourcesRequests1 = string
-
-// DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties defines model for DatabaseClusterList.Spec.Backup.Resources.Requests.AdditionalProperties.
-type DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties struct {
-	union json.RawMessage
-}
-
 // DatabaseClusterListSpecDbInstanceCpu0 defines model for .
 type DatabaseClusterListSpecDbInstanceCpu0 = int
 
@@ -1103,12 +1079,10 @@ type CreateDatabaseClusterJSONBody struct {
 					// Name Name must match the name of one entry in pod.spec.resourceClaims of the Pod where this field is used. It makes that resource available inside a container.
 					Name string `json:"name"`
 				} `json:"claims,omitempty"`
-
-				// Limits Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-				Limits *map[string]CreateDatabaseClusterJSONBody_Spec_Backup_Resources_Limits_AdditionalProperties `json:"limits,omitempty"`
+				Limits *map[string]interface{} `json:"limits,omitempty"`
 
 				// Requests Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
-				Requests *map[string]CreateDatabaseClusterJSONBody_Spec_Backup_Resources_Requests_AdditionalProperties `json:"requests,omitempty"`
+				Requests *map[string]interface{} `json:"requests,omitempty"`
 			} `json:"resources,omitempty"`
 			Schedule *[]struct {
 				CompressionLevel *int    `json:"compressionLevel,omitempty"`
@@ -1872,28 +1846,6 @@ type CreateDatabaseClusterJSONBody struct {
 	} `json:"status,omitempty"`
 }
 
-// CreateDatabaseClusterJSONBodySpecBackupResourcesLimits0 defines parameters for CreateDatabaseCluster.
-type CreateDatabaseClusterJSONBodySpecBackupResourcesLimits0 = int
-
-// CreateDatabaseClusterJSONBodySpecBackupResourcesLimits1 defines parameters for CreateDatabaseCluster.
-type CreateDatabaseClusterJSONBodySpecBackupResourcesLimits1 = string
-
-// CreateDatabaseClusterJSONBody_Spec_Backup_Resources_Limits_AdditionalProperties defines parameters for CreateDatabaseCluster.
-type CreateDatabaseClusterJSONBody_Spec_Backup_Resources_Limits_AdditionalProperties struct {
-	union json.RawMessage
-}
-
-// CreateDatabaseClusterJSONBodySpecBackupResourcesRequests0 defines parameters for CreateDatabaseCluster.
-type CreateDatabaseClusterJSONBodySpecBackupResourcesRequests0 = int
-
-// CreateDatabaseClusterJSONBodySpecBackupResourcesRequests1 defines parameters for CreateDatabaseCluster.
-type CreateDatabaseClusterJSONBodySpecBackupResourcesRequests1 = string
-
-// CreateDatabaseClusterJSONBody_Spec_Backup_Resources_Requests_AdditionalProperties defines parameters for CreateDatabaseCluster.
-type CreateDatabaseClusterJSONBody_Spec_Backup_Resources_Requests_AdditionalProperties struct {
-	union json.RawMessage
-}
-
 // CreateDatabaseClusterJSONBodySpecDbInstanceCpu0 defines parameters for CreateDatabaseCluster.
 type CreateDatabaseClusterJSONBodySpecDbInstanceCpu0 = int
 
@@ -1976,130 +1928,6 @@ type RegisterKubernetesJSONRequestBody = KubernetesCluster
 
 // CreateDatabaseClusterJSONRequestBody defines body for CreateDatabaseCluster for application/json ContentType.
 type CreateDatabaseClusterJSONRequestBody CreateDatabaseClusterJSONBody
-
-// AsDatabaseClusterListSpecBackupResourcesLimits0 returns the union data inside the DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties as a DatabaseClusterListSpecBackupResourcesLimits0
-func (t DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties) AsDatabaseClusterListSpecBackupResourcesLimits0() (DatabaseClusterListSpecBackupResourcesLimits0, error) {
-	var body DatabaseClusterListSpecBackupResourcesLimits0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromDatabaseClusterListSpecBackupResourcesLimits0 overwrites any union data inside the DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties as the provided DatabaseClusterListSpecBackupResourcesLimits0
-func (t *DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties) FromDatabaseClusterListSpecBackupResourcesLimits0(v DatabaseClusterListSpecBackupResourcesLimits0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeDatabaseClusterListSpecBackupResourcesLimits0 performs a merge with any union data inside the DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties, using the provided DatabaseClusterListSpecBackupResourcesLimits0
-func (t *DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties) MergeDatabaseClusterListSpecBackupResourcesLimits0(v DatabaseClusterListSpecBackupResourcesLimits0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JsonMerge(b, t.union)
-	t.union = merged
-	return err
-}
-
-// AsDatabaseClusterListSpecBackupResourcesLimits1 returns the union data inside the DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties as a DatabaseClusterListSpecBackupResourcesLimits1
-func (t DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties) AsDatabaseClusterListSpecBackupResourcesLimits1() (DatabaseClusterListSpecBackupResourcesLimits1, error) {
-	var body DatabaseClusterListSpecBackupResourcesLimits1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromDatabaseClusterListSpecBackupResourcesLimits1 overwrites any union data inside the DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties as the provided DatabaseClusterListSpecBackupResourcesLimits1
-func (t *DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties) FromDatabaseClusterListSpecBackupResourcesLimits1(v DatabaseClusterListSpecBackupResourcesLimits1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeDatabaseClusterListSpecBackupResourcesLimits1 performs a merge with any union data inside the DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties, using the provided DatabaseClusterListSpecBackupResourcesLimits1
-func (t *DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties) MergeDatabaseClusterListSpecBackupResourcesLimits1(v DatabaseClusterListSpecBackupResourcesLimits1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JsonMerge(b, t.union)
-	t.union = merged
-	return err
-}
-
-func (t DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *DatabaseClusterList_Spec_Backup_Resources_Limits_AdditionalProperties) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
-
-// AsDatabaseClusterListSpecBackupResourcesRequests0 returns the union data inside the DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties as a DatabaseClusterListSpecBackupResourcesRequests0
-func (t DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties) AsDatabaseClusterListSpecBackupResourcesRequests0() (DatabaseClusterListSpecBackupResourcesRequests0, error) {
-	var body DatabaseClusterListSpecBackupResourcesRequests0
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromDatabaseClusterListSpecBackupResourcesRequests0 overwrites any union data inside the DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties as the provided DatabaseClusterListSpecBackupResourcesRequests0
-func (t *DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties) FromDatabaseClusterListSpecBackupResourcesRequests0(v DatabaseClusterListSpecBackupResourcesRequests0) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeDatabaseClusterListSpecBackupResourcesRequests0 performs a merge with any union data inside the DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties, using the provided DatabaseClusterListSpecBackupResourcesRequests0
-func (t *DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties) MergeDatabaseClusterListSpecBackupResourcesRequests0(v DatabaseClusterListSpecBackupResourcesRequests0) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JsonMerge(b, t.union)
-	t.union = merged
-	return err
-}
-
-// AsDatabaseClusterListSpecBackupResourcesRequests1 returns the union data inside the DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties as a DatabaseClusterListSpecBackupResourcesRequests1
-func (t DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties) AsDatabaseClusterListSpecBackupResourcesRequests1() (DatabaseClusterListSpecBackupResourcesRequests1, error) {
-	var body DatabaseClusterListSpecBackupResourcesRequests1
-	err := json.Unmarshal(t.union, &body)
-	return body, err
-}
-
-// FromDatabaseClusterListSpecBackupResourcesRequests1 overwrites any union data inside the DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties as the provided DatabaseClusterListSpecBackupResourcesRequests1
-func (t *DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties) FromDatabaseClusterListSpecBackupResourcesRequests1(v DatabaseClusterListSpecBackupResourcesRequests1) error {
-	b, err := json.Marshal(v)
-	t.union = b
-	return err
-}
-
-// MergeDatabaseClusterListSpecBackupResourcesRequests1 performs a merge with any union data inside the DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties, using the provided DatabaseClusterListSpecBackupResourcesRequests1
-func (t *DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties) MergeDatabaseClusterListSpecBackupResourcesRequests1(v DatabaseClusterListSpecBackupResourcesRequests1) error {
-	b, err := json.Marshal(v)
-	if err != nil {
-		return err
-	}
-
-	merged, err := runtime.JsonMerge(b, t.union)
-	t.union = merged
-	return err
-}
-
-func (t DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties) MarshalJSON() ([]byte, error) {
-	b, err := t.union.MarshalJSON()
-	return b, err
-}
-
-func (t *DatabaseClusterList_Spec_Backup_Resources_Requests_AdditionalProperties) UnmarshalJSON(b []byte) error {
-	err := t.union.UnmarshalJSON(b)
-	return err
-}
 
 // AsDatabaseClusterListSpecDbInstanceCpu0 returns the union data inside the DatabaseClusterList_Spec_DbInstance_Cpu as a DatabaseClusterListSpecDbInstanceCpu0
 func (t DatabaseClusterList_Spec_DbInstance_Cpu) AsDatabaseClusterListSpecDbInstanceCpu0() (DatabaseClusterListSpecDbInstanceCpu0, error) {
