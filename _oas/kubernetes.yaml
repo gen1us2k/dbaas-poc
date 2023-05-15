@@ -1,0 +1,72 @@
+openapi: 3.0.2
+servers:
+  - url: /v1
+info:
+  version: 1.0.0
+  title: Percona Everest schema
+tags:
+  - name: k8s
+    description: Everything related to Kubernetes clusters
+  - name: db
+    description: Everything related to database clusters
+paths:
+  '/kubernetes/{kubernetesName}/database-cluster':
+    post:
+      tags:
+        - k8s
+      summary: Create a database cluster on given kubernetes cluster
+      description: Create a database cluster on given kubernetes cluster
+      operationId: createDatabaseCluster
+      parameters:
+        - name: kubernetesName
+          in: path
+          description: Name of kubernetes Cluster
+          required: true
+          schema:
+            type: string
+      response:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: './_oas/database_cluster.yml'
+        '400':
+          description: Unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/BadRequest'
+      requestBody:
+        description: Register a new kubernetes cluster in the control plane
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: './_oas/database_cluster.yml'
+    get:
+      tags:
+        - k8s
+      summary: List of created database clusters on provided kubernetes cluster
+      description: List of created database clusters on provided kubernetes cluster
+      operationId: listDatabases
+      response:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/DatabaseClusterList'
+        '400':
+          description: Unsuccessful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#components/schemas/BadRequest'
+components:
+  schemas:
+    DatabaseClusterList:
+      type: array
+      items:
+        type: object
+        $ref: './_oas_database_cluster.yml'
