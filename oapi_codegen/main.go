@@ -26,7 +26,11 @@ func main() {
 	swagger.Servers = nil
 
 	// Create an instance of our handler which satisfies the generated interface
-	petStore := api.NewEverestServer()
+	petStore, err := api.NewEverestServer()
+	if err != nil {
+		fmt.Fprintf(os.Stderr, "Error creating Everest Server\n: %s", err)
+		os.Exit(1)
+	}
 
 	// This is how you set up a basic Echo router
 	e := echo.New()

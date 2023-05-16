@@ -131,6 +131,8 @@ components:
         name:
           type: string
           example: minikube
+        kubeconfig:
+          type: string
     KubernetesClusterList:
       type: array
       items:

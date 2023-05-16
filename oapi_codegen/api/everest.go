@@ -10,7 +10,8 @@ import (
 	"net/url"
 	"strings"
 
-	"github.com/gin-gonic/gin"
+	"github.com/AlekSi/pointer"
+	. "github.com/gen1us2k/dbaas-poc/oapi_codegen/api/models"
 	vault "github.com/hashicorp/vault/api"
 	"github.com/labstack/echo/v4"
 	"k8s.io/client-go/rest"
@@ -29,65 +30,60 @@ func NewEverestServer() (*EverestServer, error) {
 		return nil, err
 	}
 	client.SetToken("myroot")
-	return &EverestServer{v: client}
+	return &EverestServer{v: client}, nil
 }
 func (e *EverestServer) ListKubernetesClusters(c echo.Context) error {
 	return c.JSON(http.StatusNotImplemented, nil)
 }
 func (e *EverestServer) RegisterKubernetes(c echo.Context) error {
-	var k KubeCluster
-	if err := c.BindJSON(&k); err != nil {
+	var k KubernetesCluster
+	if err := c.Bind(&k); err != nil {
 		log.Println(err)
-		return
+		return c.JSON(http.StatusBadRequest, BadRequest{Message: pointer.ToString(err.Error())})
 	}
 	log.Println(k.Kubeconfig)
-	_, err := clientcmd.BuildConfigFromKubeconfigGetter("", NewConfigGetter(k.Kubeconfig).loadFromString)
+	_, err := clientcmd.BuildConfigFromKubeconfigGetter("", NewConfigGetter(*k.Kubeconfig).loadFromString)
 	if err != nil {
 		log.Println(err)
-		c.JSON(http.StatusBadRequest, gin.H{"message": err})
-		return
+		return c.JSON(http.StatusBadRequest, BadRequest{Message: pointer.ToString(err.Error())})
 	}
 	m := map[string]interface{}{
 		"kubeconfig": k.Kubeconfig,
 	}
 
-	_, err = s.v.KVv2("secret").Put(context.TODO(), k.Name, m)
+	_, err = e.v.KVv2("secret").Put(context.TODO(), *k.Name, m)
 	if err != nil {
 		log.Println(err)
-		c.JSON(http.StatusBadRequest, gin.H{"message": err})
-		return
+		return c.JSON(http.StatusBadRequest, BadRequest{Message: pointer.ToString(err.Error())})
 	}
-	return c.JSON(http.StatusNotImplemented, nil)
+	return c.JSON(http.StatusOK, k)
 }
 func (e *EverestServer) ListDatabases(c echo.Context, kubernetesName string) error {
-	return c.JSON(http.StatusNotImplemented, nil)
+	return e.proxyKubernetes(c, kubernetesName)
 }
 func (e *EverestServer) CreateDatabaseCluster(c echo.Context, kubernetesName string) error {
 	return c.JSON(http.StatusNotImplemented, nil)
 }
 func (e *EverestServer) proxyKubernetes(c echo.Context, kubernetesName string) error {
-	kConfig, err := s.v.KVv2("secret").Get(context.TODO(), kubernetesName)
+	kConfig, err := e.v.KVv2("secret").Get(context.TODO(), kubernetesName)
 	kubeconfig, ok := kConfig.Data["kubeconfig"].(string)
 	if !ok {
-		return
+		return c.JSON(http.StatusBadRequest, BadRequest{Message: pointer.ToString(err.Error())})
 	}
 	config, err := clientcmd.BuildConfigFromKubeconfigGetter("", NewConfigGetter(kubeconfig).loadFromString)
 	if err != nil {
 		log.Println(err)
-		c.JSON(http.StatusBadRequest, gin.H{"message": err})
-		return
+		return c.JSON(http.StatusBadRequest, BadRequest{Message: pointer.ToString(err.Error())})
 	}
 	data, err := json.Marshal(kConfig)
 	if err != nil {
 		log.Println(err)
-		c.JSON(http.StatusBadRequest, gin.H{"message": err})
-		return
+		return c.JSON(http.StatusBadRequest, BadRequest{Message: pointer.ToString(err.Error())})
 	}
 	err = json.Unmarshal(data, config)
 	if err != nil {
 		log.Println(err)
-		c.JSON(http.StatusBadRequest, gin.H{"message": err})
-		return
+		return c.JSON(http.StatusBadRequest, BadRequest{Message: pointer.ToString(err.Error())})
 	}
 	reverseProxy := httputil.NewSingleHostReverseProxy(&url.URL{
 		Host:   strings.TrimPrefix(config.Host, "https://"),
@@ -95,10 +91,11 @@ func (e *EverestServer) proxyKubernetes(c echo.Context, kubernetesName string) e
 	})
 	transport, err := rest.TransportFor(config)
 	if err != nil {
-		return
+		return c.JSON(http.StatusBadRequest, BadRequest{Message: pointer.ToString(err.Error())})
 	}
 	reverseProxy.Transport = transport
-	req := c.Request
-	req.URL.Path = strings.TrimLeft(req.URL.Path, fmt.Sprintf("/proxy/%s", name))
-	reverseProxy.ServeHTTP(c.Writer, req)
+	req := c.Request()
+	req.URL.Path = fmt.Sprintf("/apis/dbaas.percona.com/v1/namespaces/%s/databaseclusters", "default")
+	reverseProxy.ServeHTTP(c.Response(), req)
+	return nil
 }

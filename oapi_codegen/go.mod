@@ -3,6 +3,7 @@ module github.com/gen1us2k/dbaas-poc/oapi_codegen
 go 1.20
 
 require (
+	github.com/AlekSi/pointer v1.2.0
 	github.com/deepmap/oapi-codegen v1.12.4
 	github.com/getkin/kin-openapi v0.107.0
 	github.com/gin-gonic/gin v1.8.1
