@@ -1,0 +1,11 @@
+package models
+
+// DatabaseClusterSpecBackupStoragesValueAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreference - A node selector term, associated with the corresponding weight.
+type DatabaseClusterSpecBackupStoragesValueAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreference struct {
+
+	// A list of node selector requirements by node's labels.
+	MatchExpressions []DatabaseClusterSpecBackupStoragesValueAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreferenceMatchExpressionsInner `json:"matchExpressions,omitempty"`
+
+	// A list of node selector requirements by node's fields.
+	MatchFields []DatabaseClusterSpecBackupStoragesValueAffinityNodeAffinityPreferredDuringSchedulingIgnoredDuringExecutionInnerPreferenceMatchExpressionsInner `json:"matchFields,omitempty"`
+}

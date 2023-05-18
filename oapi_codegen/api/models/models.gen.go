@@ -565,6 +565,12 @@ type DatabaseClusterList = []struct {
 						// Name Name must match the name of one entry in pod.spec.resourceClaims of the Pod where this field is used. It makes that resource available inside a container.
 						Name string `json:"name"`
 					} `json:"claims,omitempty"`
+
+					// Limits Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+					Limits *map[string]DatabaseClusterList_Spec_Backup_Storages_Resources_Limits_AdditionalProperties `json:"limits,omitempty"`
+
+					// Requests Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+					Requests *map[string]DatabaseClusterList_Spec_Backup_Storages_Resources_Requests_AdditionalProperties `json:"requests,omitempty"`
 				} `json:"resources,omitempty"`
 				RuntimeClassName *string `json:"runtimeClassName,omitempty"`
 				SchedulerName    *string `json:"schedulerName,omitempty"`
@@ -610,6 +616,9 @@ type DatabaseClusterList = []struct {
 					EmptyDir *struct {
 						// Medium medium represents what type of storage medium should back this directory. The default is "" which means to use the node's default medium. Must be an empty string (default) or Memory. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
 						Medium *string `json:"medium,omitempty"`
+
+						// SizeLimit sizeLimit is the total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: http://kubernetes.io/docs/user-guide/volumes#emptydir
+						SizeLimit *DatabaseClusterList_Spec_Backup_Storages_VolumeSpec_EmptyDir_SizeLimit `json:"sizeLimit,omitempty"`
 					} `json:"emptyDir,omitempty"`
 
 					// HostPath HostPath to use as data volume for mysql. HostPath represents a pre-existing file or directory on the host machine that is directly exposed to the container.
@@ -664,6 +673,10 @@ type DatabaseClusterList = []struct {
 							} `json:"claims,omitempty"`
 
 							// Limits Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+							Limits *map[string]DatabaseClusterList_Spec_Backup_Storages_VolumeSpec_PersistentVolumeClaim_Resources_Limits_AdditionalProperties `json:"limits,omitempty"`
+
+							// Requests Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+							Requests *map[string]DatabaseClusterList_Spec_Backup_Storages_VolumeSpec_PersistentVolumeClaim_Resources_Requests_AdditionalProperties `json:"requests,omitempty"`
 						} `json:"resources,omitempty"`
 
 						// Selector selector is a label query over volumes to consider for binding.
@@ -1534,6 +1547,12 @@ type CreateDatabaseClusterJSONBody struct {
 						// Name Name must match the name of one entry in pod.spec.resourceClaims of the Pod where this field is used. It makes that resource available inside a container.
 						Name string `json:"name"`
 					} `json:"claims,omitempty"`
+
+					// Limits Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+					Limits *map[string]CreateDatabaseClusterJSONBody_Spec_Backup_Storages_Resources_Limits_AdditionalProperties `json:"limits,omitempty"`
+
+					// Requests Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+					Requests *map[string]CreateDatabaseClusterJSONBody_Spec_Backup_Storages_Resources_Requests_AdditionalProperties `json:"requests,omitempty"`
 				} `json:"resources,omitempty"`
 				RuntimeClassName *string `json:"runtimeClassName,omitempty"`
 				SchedulerName    *string `json:"schedulerName,omitempty"`
@@ -1579,6 +1598,9 @@ type CreateDatabaseClusterJSONBody struct {
 					EmptyDir *struct {
 						// Medium medium represents what type of storage medium should back this directory. The default is "" which means to use the node's default medium. Must be an empty string (default) or Memory. More info: https://kubernetes.io/docs/concepts/storage/volumes#emptydir
 						Medium *string `json:"medium,omitempty"`
+
+						// SizeLimit sizeLimit is the total amount of local storage required for this EmptyDir volume. The size limit is also applicable for memory medium. The maximum usage on memory medium EmptyDir would be the minimum value between the SizeLimit specified here and the sum of memory limits of all containers in a pod. The default is nil which means that the limit is undefined. More info: http://kubernetes.io/docs/user-guide/volumes#emptydir
+						SizeLimit *CreateDatabaseClusterJSONBody_Spec_Backup_Storages_VolumeSpec_EmptyDir_SizeLimit `json:"sizeLimit,omitempty"`
 					} `json:"emptyDir,omitempty"`
 
 					// HostPath HostPath to use as data volume for mysql. HostPath represents a pre-existing file or directory on the host machine that is directly exposed to the container.
@@ -1631,6 +1653,12 @@ type CreateDatabaseClusterJSONBody struct {
 								// Name Name must match the name of one entry in pod.spec.resourceClaims of the Pod where this field is used. It makes that resource available inside a container.
 								Name string `json:"name"`
 							} `json:"claims,omitempty"`
+
+							// Limits Limits describes the maximum amount of compute resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+							Limits *map[string]CreateDatabaseClusterJSONBody_Spec_Backup_Storages_VolumeSpec_PersistentVolumeClaim_Resources_Limits_AdditionalProperties `json:"limits,omitempty"`
+
+							// Requests Requests describes the minimum amount of compute resources required. If Requests is omitted for a container, it defaults to Limits if that is explicitly specified, otherwise to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-resources-containers/
+							Requests *map[string]CreateDatabaseClusterJSONBody_Spec_Backup_Storages_VolumeSpec_PersistentVolumeClaim_Resources_Requests_AdditionalProperties `json:"requests,omitempty"`
 						} `json:"resources,omitempty"`
 
 						// Selector selector is a label query over volumes to consider for binding.

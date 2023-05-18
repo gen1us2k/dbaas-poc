@@ -14,6 +14,7 @@ import (
 	"strings"
 
 	"github.com/deepmap/oapi-codegen/pkg/runtime"
+	. "github.com/gen1us2k/dbaas-poc/oapi_codegen/api/models"
 	"github.com/getkin/kin-openapi/openapi3"
 	"github.com/labstack/echo/v4"
 )
@@ -116,6 +117,7 @@ func RegisterHandlersWithBaseURL(router EchoRouter, si ServerInterface, baseURL 
 	wrapper := ServerInterfaceWrapper{
 		Handler: si,
 	}
+
 	router.GET(baseURL+"/kubernetes", wrapper.ListKubernetesClusters)
 	router.POST(baseURL+"/kubernetes", wrapper.RegisterKubernetes)
 	router.GET(baseURL+"/kubernetes/:kubernetesName/database-cluster", wrapper.ListDatabases)
