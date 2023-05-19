@@ -11,7 +11,6 @@ import (
 	"strings"
 
 	"github.com/AlekSi/pointer"
-	. "github.com/gen1us2k/dbaas-poc/oapi_codegen/api/models"
 	vault "github.com/hashicorp/vault/api"
 	"github.com/labstack/echo/v4"
 	"k8s.io/client-go/rest"
